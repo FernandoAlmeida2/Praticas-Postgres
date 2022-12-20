@@ -2,7 +2,7 @@ CREATE TABLE customers (
     id SERIAL PRIMARY KEY,
     "fullName" TEXT NOT NULL,
     cpf TEXT NOT NULL UNIQUE,
-    email TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL
 );
 
@@ -37,7 +37,7 @@ CREATE TABLE states (
 CREATE TABLE "bankAccount" (
     id SERIAL PRIMARY KEY,
     "customerId" INTEGER NOT NULL,
-    "accountNumber" TEXT NOT NULL,
+    "accountNumber" TEXT NOT NULL UNIQUE,
     agency TEXT NOT NULL,
     "openDate" DATE NOT NULL,
     "closeDate" DATE NOT NULL
