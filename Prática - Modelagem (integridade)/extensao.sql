@@ -1,16 +1,18 @@
 CREATE TABLE customers (
     id SERIAL PRIMARY KEY,
     "fullName" TEXT NOT NULL,
-    cpf TEXT NOT NULL UNIQUE,
+    cpf VARCHAR(11) NOT NULL UNIQUE,
     email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL
 );
+
+CREATE TYPE "typePhone" AS ENUM ('landline', 'mobile');
 
 CREATE TABLE "customerPhones" (
     id SERIAL PRIMARY KEY,
     "customerId" INTEGER NOT NULL,
     number VARCHAR(9) NOT NULL,
-    type TEXT NOT NULL AS ENUM ('landline', 'mobile')
+    type "typePhone" NOT NULL
 );
 
 CREATE TABLE "customerAddresses" (
@@ -43,25 +45,28 @@ CREATE TABLE "bankAccount" (
     "closeDate" DATE NOT NULL
 );
 
+CREATE TYPE "typeTransactions" AS ENUM ('deposit', 'withdraw');
+
 CREATE TABLE transactions (
     id SERIAL PRIMARY KEY,
     "bankAccountId" INTEGER NOT NULL,
-    amount INTEGER NOT NULL,
-    type TEXT NOT NULL AS ENUM ('deposit', 'withdraw'),
-    time TIME NOT NULL,
+    amount BIGINT NOT NULL,
+    type "typeTransactions" NOT NULL,
+    time TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
     description TEXT NOT NULL
-    cancelled BOOLEAN DEFAULT FALSE,
+    cancelled BOOLEAN NOT NULL DEFAULT FALSE,
 );
 
 CREATE TABLE "creditCards" (
     id SERIAL PRIMARY KEY,
     "bankAccountId" INTEGER NOT NULL,
     name VARCHAR(30) NOT NULL,
-    number TEXT NOT NULL,
+    number TEXT NOT NULL UNIQUE,
     "securityCode" TEXT NOT NULL,
+    "expirationMonth" INTEGER NOT NULL,
     "expirationYear" INTEGER NOT NULL,
     password TEXT NOT NULL,
-    limit INTEGER NOT NULL
+    "limit" INTEGER NOT NULL
 );
 
 ALTER TABLE "cities" ADD CONSTRAINT "cities_fk0" FOREIGN KEY ("stateId") REFERENCES "states"("id");
