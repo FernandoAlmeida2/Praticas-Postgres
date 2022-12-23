@@ -15,7 +15,7 @@ CREATE TABLE "studentsClasses" (
     "studentId" INTEGER NOT NULL REFERENCES students(id),
     "classId" INTEGER NOT NULL REFERENCES classes(id)
     "startDate" DATE NOT NULL DEFAULT NOW(),
-    "endDate" DATE NOT NULL DEFAULT NOW()
+    "endDate" DATE
 );
 
 CREATE TABLE modules (
